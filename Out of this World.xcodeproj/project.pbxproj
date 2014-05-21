@@ -14,13 +14,14 @@
 		BAE0ED7D192C34C500FA1B13 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE0ED7C192C34C500FA1B13 /* main.m */; };
 		BAE0ED81192C34C500FA1B13 /* ADAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE0ED80192C34C500FA1B13 /* ADAppDelegate.m */; };
 		BAE0ED84192C34C500FA1B13 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAE0ED82192C34C500FA1B13 /* Main.storyboard */; };
-		BAE0ED87192C34C500FA1B13 /* ADViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE0ED86192C34C500FA1B13 /* ADViewController.m */; };
 		BAE0ED89192C34C500FA1B13 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAE0ED88192C34C500FA1B13 /* Images.xcassets */; };
 		BAE0ED90192C34C500FA1B13 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0ED8F192C34C500FA1B13 /* XCTest.framework */; };
 		BAE0ED91192C34C500FA1B13 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0ED70192C34C500FA1B13 /* Foundation.framework */; };
 		BAE0ED92192C34C500FA1B13 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE0ED74192C34C500FA1B13 /* UIKit.framework */; };
 		BAE0ED9A192C34C500FA1B13 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BAE0ED98192C34C500FA1B13 /* InfoPlist.strings */; };
 		BAE0ED9C192C34C500FA1B13 /* Out_of_this_WorldTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE0ED9B192C34C500FA1B13 /* Out_of_this_WorldTests.m */; };
+		BAE0EDA7192C359100FA1B13 /* ADTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE0EDA6192C359100FA1B13 /* ADTableViewController.m */; };
+		BAE0EDAA192C3F4000FA1B13 /* AstronomicalData.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE0EDA9192C3F4000FA1B13 /* AstronomicalData.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,14 +46,16 @@
 		BAE0ED7F192C34C500FA1B13 /* ADAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADAppDelegate.h; sourceTree = "<group>"; };
 		BAE0ED80192C34C500FA1B13 /* ADAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ADAppDelegate.m; sourceTree = "<group>"; };
 		BAE0ED83192C34C500FA1B13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		BAE0ED85192C34C500FA1B13 /* ADViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADViewController.h; sourceTree = "<group>"; };
-		BAE0ED86192C34C500FA1B13 /* ADViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ADViewController.m; sourceTree = "<group>"; };
 		BAE0ED88192C34C500FA1B13 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		BAE0ED8E192C34C500FA1B13 /* Out of this WorldTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Out of this WorldTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAE0ED8F192C34C500FA1B13 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		BAE0ED97192C34C500FA1B13 /* Out of this WorldTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Out of this WorldTests-Info.plist"; sourceTree = "<group>"; };
 		BAE0ED99192C34C500FA1B13 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BAE0ED9B192C34C500FA1B13 /* Out_of_this_WorldTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Out_of_this_WorldTests.m; sourceTree = "<group>"; };
+		BAE0EDA5192C359100FA1B13 /* ADTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADTableViewController.h; path = ../ADTableViewController.h; sourceTree = "<group>"; };
+		BAE0EDA6192C359100FA1B13 /* ADTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADTableViewController.m; path = ../ADTableViewController.m; sourceTree = "<group>"; };
+		BAE0EDA8192C3F4000FA1B13 /* AstronomicalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AstronomicalData.h; sourceTree = "<group>"; };
+		BAE0EDA9192C3F4000FA1B13 /* AstronomicalData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AstronomicalData.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,8 +118,8 @@
 				BAE0ED7F192C34C500FA1B13 /* ADAppDelegate.h */,
 				BAE0ED80192C34C500FA1B13 /* ADAppDelegate.m */,
 				BAE0ED82192C34C500FA1B13 /* Main.storyboard */,
-				BAE0ED85192C34C500FA1B13 /* ADViewController.h */,
-				BAE0ED86192C34C500FA1B13 /* ADViewController.m */,
+				BAE0EDA5192C359100FA1B13 /* ADTableViewController.h */,
+				BAE0EDA6192C359100FA1B13 /* ADTableViewController.m */,
 				BAE0ED88192C34C500FA1B13 /* Images.xcassets */,
 				BAE0ED77192C34C500FA1B13 /* Supporting Files */,
 			);
@@ -126,6 +129,8 @@
 		BAE0ED77192C34C500FA1B13 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BAE0EDA8192C3F4000FA1B13 /* AstronomicalData.h */,
+				BAE0EDA9192C3F4000FA1B13 /* AstronomicalData.m */,
 				BAE0ED78192C34C500FA1B13 /* Out of this World-Info.plist */,
 				BAE0ED79192C34C500FA1B13 /* InfoPlist.strings */,
 				BAE0ED7C192C34C500FA1B13 /* main.m */,
@@ -251,8 +256,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				BAE0ED7D192C34C500FA1B13 /* main.m in Sources */,
-				BAE0ED87192C34C500FA1B13 /* ADViewController.m in Sources */,
+				BAE0EDA7192C359100FA1B13 /* ADTableViewController.m in Sources */,
 				BAE0ED81192C34C500FA1B13 /* ADAppDelegate.m in Sources */,
+				BAE0EDAA192C3F4000FA1B13 /* AstronomicalData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

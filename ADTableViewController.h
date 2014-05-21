@@ -1,5 +1,5 @@
 //
-//  ADViewController.h
+//  ADTableViewController.h
 //  Out of this World
 //
 //  Created by Arturo Dodd Vaudrecourt on 5/20/14.
@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ADViewController : UIViewController
+@interface ADTableViewController : UITableViewController
+
+@property (strong, nonatomic) NSMutableArray *planets;
 
 @end
