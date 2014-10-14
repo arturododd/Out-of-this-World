@@ -7,12 +7,34 @@
 //
 
 #import "ADTableViewController.h"
+#import "AstronomicalData.h"
+#import "ADSpaceObject.h"
+#import "ADSpaceImageViewController.h"
+#import "ADSpaceDataViewController.h"
 
 @interface ADTableViewController ()
 
 @end
 
 @implementation ADTableViewController
+
+#pragma mark - Lazy Instantiation of Properties
+
+-(NSMutableArray *)planets
+{
+    if (!_planets) {
+        _planets = [[NSMutableArray alloc] init];
+    }
+    return _planets;
+}
+
+-(NSMutableArray *)addedSpaceObjects
+{
+    if (!_addedSpaceObjects) {
+        _addedSpaceObjects = [[NSMutableArray alloc] init];
+    }
+    return _addedSpaceObjects;
+}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -27,43 +49,58 @@
 {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    /*self.planets = [[NSMutableArray alloc] init];
+     Not used due to Lazy Instantiation*/
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
-    
-    self.planets = [[NSMutableArray alloc] init];
-    
-    NSString *planet1 = @"Mercury";
-    NSString *planet2 = @"Venus";
-    NSString *planet3 = @"Earth";
-    NSString *planet4 = @"Mars";
-    NSString *planet5 = @"Jupiter";
-    NSString *planet6 = @"Saturn";
-    NSString *planet7 = @"Uranus";
-    NSString *planet8 = @"Neptun";
-    
-    [self.planets addObject:planet1];
-    [self.planets addObject:planet2];
-    [self.planets addObject:planet3];
-    [self.planets addObject:planet4];
-    [self.planets addObject:planet5];
-    [self.planets addObject:planet6];
-    [self.planets addObject:planet7];
-    [self.planets addObject:planet8];
-    
-//    NSMutableDictionary *myDictionary = [[NSMutableDictionary alloc] init];
-//    NSString *firstColor = @"Red";
-//    [myDictionary setObject:firstColor forKey:@"Firetruck Color"];
-//    [myDictionary setObject:@"blue" forKey:@"Ocean Color"];
-//    [myDictionary setObject:@"yellow" forKey:@"Star Color"];
-//    
-//    NSString *blueString = [myDictionary objectForKey:@"Ocean Color"];
-    
-    NSNumber *myNumber = [NSNumber numberWithInt:5];
+    for (NSMutableDictionary *planetData in [AstronomicalData allKnownPlanets]) {
+        NSString *imageName = [NSString stringWithFormat:@"%@.jpg", planetData[PLANET_NAME]];
+        ADSpaceObject *planet = [[ADSpaceObject alloc] initWithData:planetData andImage:[UIImage imageNamed:imageName]];
+        [self.planets addObject:planet];
+    }
+}
 
+//Prepare for Segue methods
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSLog(@"%@", sender);
+    
+    if ([sender isKindOfClass:[UITableViewCell class]])
+    {
+        if ([segue.destinationViewController isKindOfClass:[ADSpaceImageViewController class]])
+        {
+            ADSpaceImageViewController *nextViewController = segue.destinationViewController;
+            NSIndexPath *path = [self.tableView indexPathForCell:sender];
+            ADSpaceObject *selectObject;
+            if (path.section == 0) {
+                selectObject = self.planets[path.row];
+            }
+            else if (path.section == 1){
+                selectObject = self.addedSpaceObjects[path.row];
+            }
+
+            nextViewController.spaceObject = selectObject;
+        }
+    }
+    
+    if ([sender isKindOfClass:[NSIndexPath class]]) {
+        if ([segue.destinationViewController isKindOfClass:[ADSpaceDataViewController class]]) {
+            ADSpaceDataViewController *targetViewController = segue.destinationViewController;
+            NSIndexPath *path = sender;
+            ADSpaceObject *selectedObject;
+            if (path.section == 0) {
+                selectedObject = self.planets[path.row];
+            }
+            else if (path.section == 1) {
+            selectedObject = self.addedSpaceObjects[path.row];
+            }
+            targetViewController.spaceObject = selectedObject;
+        }
+    }
+    
+    if ([segue.destinationViewController isKindOfClass:[ADAddSpaceObjectViewController class]]) {
+        ADAddSpaceObjectViewController *addSpaceObjectVC = segue.destinationViewController;
+        addSpaceObjectVC.delegate = self;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -72,25 +109,53 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - ADAddSpaceObjectViewController Delegate
+
+-(void)didCancel
+{
+    NSLog(@"DidCancel");
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)addSpaceObject:(ADSpaceObject *)spaceObject
+{
+    if (!self.addedSpaceObjects) {
+        self.addedSpaceObjects = [[NSMutableArray alloc] init];
+    }
+    [self.addedSpaceObjects addObject:spaceObject];
+    
+    NSLog(@"addSpaceObject");
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    [self.tableView reloadData];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    //#warning Potentially incomplete method implementation.
+
     // Return the number of sections.
-    return 1;
+    if ([self.addedSpaceObjects count])
+    {
+        return 2;
+    }
+    else
+    {
+        return 1;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    //#warning Incomplete method implementation.
+
     // Return the number of rows in the section.
     
-    if (section == 0) {
-        return [self.planets count];
+    if (section == 1) {
+        return [self.addedSpaceObjects count];
     }
     else {
-        return 2;
+        return [self.planets count];
     }
 }
 
@@ -102,16 +167,45 @@
     
     // Configure the cell...
     
-    
-    cell.textLabel.text = [self.planets objectAtIndex:indexPath.row];
-    
-    if (indexPath.section == 0) {
-        cell.backgroundColor = [UIColor redColor];
-    } else {
-        cell.backgroundColor = [UIColor blueColor];
+    if (indexPath.section == 1) {
+        
+        //Use new Space object to customize cell
+        ADSpaceObject *planet = [self.addedSpaceObjects objectAtIndex:indexPath.row];
+        cell.textLabel.text = planet.name;
+        cell.detailTextLabel.text = planet.nickname;
+        cell.imageView.image = planet.spaceImage;
+    }
+    else {
+        //Access the ADSpaceObject from planets array. Use the properties to update cell.
+        ADSpaceObject *planet = [self.planets objectAtIndex:indexPath.row];
+        cell.textLabel.text = planet.name;
+        cell.detailTextLabel.text = planet.nickname;
+        cell.imageView.image = planet.spaceImage;
     }
     
+    //Customize the look of the cell.
+    cell.backgroundColor = [UIColor clearColor];
+    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.detailTextLabel.textColor = [UIColor colorWithWhite:0.5 alpha:1.0];
+    
+    
+    
+//    cell.textLabel.text = [self.planets objectAtIndex:indexPath.row];
+    
+//    if (indexPath.section == 0) {
+//        cell.backgroundColor = [UIColor redColor];
+//    } else {
+//        cell.backgroundColor = [UIColor blueColor];
+//    }
+    
     return cell;
+}
+
+#pragma mark UITableView Delegate
+
+-(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+    [self performSegueWithIdentifier:@"push to space data" sender:indexPath];
 }
 
 
