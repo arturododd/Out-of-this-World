@@ -59,6 +59,12 @@
         ADSpaceObject *planet = [[ADSpaceObject alloc] initWithData:planetData andImage:[UIImage imageNamed:imageName]];
         [self.planets addObject:planet];
     }
+    
+    NSArray *myPlanetsAsPropertyLists = [[NSUserDefaults standardUserDefaults] arrayForKey:ADDED_SPACE_OBJECTS_KEY];
+    for (NSDictionary *dictionary in myPlanetsAsPropertyLists) {
+        ADSpaceObject *spaceObject = [self spaceObjectForDictionary:dictionary];
+        [self.addedSpaceObjects addObject:spaceObject];
+    }
 }
 
 //Prepare for Segue methods
@@ -157,7 +163,10 @@
 
 -(ADSpaceObject *)spaceObjectForDictionary:(NSDictionary *)dictionary
 {
-    
+    NSData *dataForImage = dictionary[PLANET_IMAGE];
+    UIImage *spaceObjectImage = [UIImage imageWithData:dataForImage];
+    ADSpaceObject *spaceObject = [[ADSpaceObject alloc] initWithData:dictionary andImage:spaceObjectImage];
+    return spaceObject;
 }
 
 #pragma mark - Table view data source
@@ -239,27 +248,39 @@
 }
 
 
-/*
+
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    if (indexPath.section == 1) {
+        return YES;
+    }
+    else return NO;
 }
-*/
 
-/*
+
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
+        [self.addedSpaceObjects removeObjectAtIndex:indexPath.row];
+        
+        NSMutableArray *newSavedSpaceObjectData = [[NSMutableArray alloc] init];
+        for (ADSpaceObject *spaceObject in self.addedSpaceObjects) {
+            [newSavedSpaceObjectData addObject:[self spaceObjectAsAPropertyList:spaceObject]];
+        }
+        
+        [[NSUserDefaults standardUserDefaults] setObject:newSavedSpaceObjectData forKey:ADDED_SPACE_OBJECTS_KEY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-*/
+
 
 /*
 // Override to support rearranging the table view.
